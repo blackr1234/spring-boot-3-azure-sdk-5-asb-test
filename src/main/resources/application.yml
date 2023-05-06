@@ -1,0 +1,29 @@
+logging:
+  level:
+    com.azure.core: WARN
+    com.azure.messaging: WARN
+
+spring:
+  cloud:
+    azure:
+      servicebus:
+        connection-string: Endpoint=sb://...
+    stream:
+      function:
+        definition: consume;supply
+      bindings:
+        consume-in-0:
+          destination: my-topic
+          group: my-subscription
+          binder: servicebus
+        supply-out-0:
+          destination: my-topic
+          binder: servicebus
+      servicebus:
+        bindings:
+          consume-in-0:
+            consumer:
+              auto-complete: true
+          supply-out-0:
+            producer:
+              entity-type: topic
